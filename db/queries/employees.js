@@ -1,6 +1,15 @@
+import db from "../client.js";
+
 /** @returns the employee created according to the provided details */
 export async function createEmployee({ name, birthday, salary }) {
-  // TODO
+  let sql = ` INSERT INTO employees (name, birthday, salary)
+  VALUES ($1, $2, $3)
+  RETURNING *
+  `;
+  let {
+    rows: [employee],
+  } = await db.query(sql, [name, birthday, salary]);
+  return employee;
 }
 
 // === Part 2 ===
